@@ -26,3 +26,4 @@ foreach (var item in query)
 }
 
 logger.Info("Program ended");
+//Test comment for git
