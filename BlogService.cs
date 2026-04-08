@@ -93,13 +93,8 @@ public class BlogService
 
     public void DisplayPosts()
     {
-        var blogs = _db.Blogs.OrderBy(b => b.Name).ToList();
-
-        if (!blogs.Any())
-        {
-            Console.WriteLine("No blogs found. Please add a blog first.");
-            return;
-        }
+        var blogs = GetBlogsOrWarn();
+        if (blogs == null) return;
 
         var selectedBlog = SelectBlog(blogs, "Select a blog to view its posts:");
         if (selectedBlog == null)
