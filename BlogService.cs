@@ -108,14 +108,13 @@ public class BlogService
             return;
         }
 
-        int blogIndex = SelectBlog(blogs, "Select a blog to view its posts:");
-        if (blogIndex == -1)
+        var selectedBlog = SelectBlog(blogs, "Select a blog to view its posts:");
+        if (selectedBlog == null)
         {
             Console.WriteLine("Invalid selection. Returning to menu.");
             return;
         }
-
-        var selectedBlog = blogs[blogIndex];
+        
         var posts = _db.Posts.Where(p => p.BlogId == selectedBlog.BlogId).ToList();
 
         if (!posts.Any())
