@@ -114,7 +114,7 @@ public class BlogService
             Console.WriteLine("Invalid selection. Returning to menu.");
             return;
         }
-        
+
         var posts = _db.Posts.Where(p => p.BlogId == selectedBlog.BlogId).ToList();
 
         if (!posts.Any())
@@ -152,13 +152,13 @@ public class BlogService
         return blogs[choice - 1]; // Return zero-based index
     }
 
-    private List<Blog> GetBlogsOrWarn()
+    private List<Blog>? GetBlogsOrWarn()
     {
         var blogs = _db.Blogs.OrderBy(b => b.Name).ToList();
         if (!blogs.Any())
         {
             Console.WriteLine("No blogs found. Please add a blog first.");
-            return new List<Blog>();
+            return null;
         }
         return blogs;
     }
