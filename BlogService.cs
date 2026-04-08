@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using NLog;
 
 public class BlogService
@@ -70,11 +69,18 @@ public class BlogService
 
         var selectedBlog = blogs[blogIndex];
 
-        Console.WriteLine("Enter a title for the new post: ");
+        Console.WriteLine("Enter the title of the post: ");
         string? title = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(title))
-        {
+        if (string.IsNullOrWhiteSpace(title))        {
             Console.WriteLine("Post title cannot be empty.");
+            return;
+        }
+
+        Console.WriteLine("Enter the content of the post: ");
+        string? content = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            Console.WriteLine("Post content cannot be empty.");
             return;
         }
 
@@ -121,7 +127,7 @@ public class BlogService
             Console.WriteLine($"Posts for blog '{selectedBlog.Name}':");
             foreach (var p in posts)
             {
-                Console.WriteLine($"/n Blog: {selectedBlog.Name}");
+                Console.WriteLine($"\n Blog: {selectedBlog.Name}");
                 Console.WriteLine($"    Title: {p.Title}");
                 Console.WriteLine($"    Content: {p.Content}");
             }
@@ -145,6 +151,17 @@ public class BlogService
             return -1; // Invalid choice
         }
         return choice - 1; // Return zero-based index
+    }
+
+    private List<Blog> GetBlogsOrWarn()
+    {
+        var blogs = _db.Blogs.OrderBy(b => b.Name).ToList();
+        if (!blogs.Any())
+        {
+            Console.WriteLine("No blogs found. Please add a blog first.");
+            return new List<Blog>();
+        }
+        return blogs;
     }
 
 }
