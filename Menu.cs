@@ -1,11 +1,11 @@
 public class Menu
 {
-  private readonly BlogService_ _blogService;
+  private readonly BlogService _blogService;
 
-    public Menu(BlogService_ blogService)
-    {
+    public Menu(BlogService blogService){
         _blogService = blogService;
     }
+    
 
     public int GetUserChoice()
     {
@@ -19,16 +19,18 @@ public class Menu
 
         string? input = Console.ReadLine();
 
-        if (input?.ToLower() == "exit" || input == "5")
-        {
-            return 5; // Exit option
-        }
-
         if (!int.TryParse(input, out int choice))
         {
             Console.WriteLine("Invalid input. Please enter a number between 1 and 5.");
-            return 0; // Invalid choice
+            return 0;
         }
+
+        if (choice < 1 || choice > 5)
+        {
+            Console.WriteLine("Invalid input. Please enter a number between 1 and 5.");
+            return 0;
+        }
+
         return choice;
     }
 }
