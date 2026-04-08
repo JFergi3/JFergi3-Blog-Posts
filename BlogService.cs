@@ -52,22 +52,15 @@ public class BlogService
 
     public void CreatePost()
     {
-        var blogs = _db.Blogs.OrderBy(b => b.Name).ToList();
+        var blogs = GetBlogsOrWarn();
+        if (blogs == null) return;
 
-        if (!blogs.Any())
-        {
-            Console.WriteLine("No blogs found. Please add a blog first.");
-            return;
-        }
-
-        int blogIndex = SelectBlog(blogs, "Select a blog to add a post to:");
-        if (blogIndex == -1)
+        var selectedBlog = SelectBlog(blogs, "Select a blog to add a post to:");
+        if (selectedBlog == null)
         {
             Console.WriteLine("Invalid selection. Returning to menu.");
             return;
         }
-
-        var selectedBlog = blogs[blogIndex];
 
         Console.WriteLine("Enter the title of the post: ");
         string? title = Console.ReadLine();
