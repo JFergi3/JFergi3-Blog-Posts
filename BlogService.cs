@@ -136,7 +136,7 @@ public class BlogService
         _logger.Info("Displayed posts for blog {blogName}", selectedBlog.Name);
     }
 
-    private int SelectBlog(List<Blog> blogs, string prompt)
+    private Blog? SelectBlog(List<Blog> blogs, string prompt)
     {
         Console.WriteLine(prompt);
         for (int i = 0; i < blogs.Count; i++)
@@ -148,9 +148,9 @@ public class BlogService
         string? input = Console.ReadLine();
         if (!int.TryParse(input, out int choice) || choice < 1 || choice > blogs.Count)
         {
-            return -1; // Invalid choice
+            return null; // Invalid choice
         }
-        return choice - 1; // Return zero-based index
+        return blogs[choice - 1]; // Return zero-based index
     }
 
     private List<Blog> GetBlogsOrWarn()
