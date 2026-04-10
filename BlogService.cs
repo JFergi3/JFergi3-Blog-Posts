@@ -105,6 +105,9 @@ public class BlogService
 
         var posts = _db.Posts.Where(p => p.BlogId == selectedBlog.BlogId).ToList();
 
+        Console.WriteLine($"\nBlog: '{selectedBlog.Name}':");
+        Console.WriteLine($"Number of posts: {posts.Count}");
+
         if (!posts.Any())
         {
             Console.WriteLine($"No posts found for blog '{selectedBlog.Name}'.");
