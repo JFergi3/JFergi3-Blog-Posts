@@ -6,24 +6,40 @@ var logger = LogManager.Setup().LoadConfigurationFromFile(path).GetCurrentClassL
 
 logger.Info("Program started");
 
-// Create and save a new Blog
-Console.Write("Enter a name for a new Blog: ");
-var name = Console.ReadLine();
-
-var blog = new Blog { Name = name };
-
 var db = new DataContext();
-db.AddBlog(blog);
-logger.Info("Blog added - {name}", name);
+var blogService = new BlogService(db, logger);
+var menu = new Menu(blogService);
 
-// Display all Blogs from the database
-var query = db.Blogs.OrderBy(b => b.Name);
+bool running = true;
 
-Console.WriteLine("All blogs in the database:");
-foreach (var item in query)
+while (running)
 {
-  Console.WriteLine(item.Name);
+    int choice = menu.GetUserChoice();
+
+    switch (choice)
+    {
+        case 1:
+            blogService.DisplayBlogs();
+            break;
+        case 2:
+            blogService.AddBlog();
+            break;
+        case 3:
+            blogService.CreatePost();
+            break;
+        case 4:
+            blogService.DisplayPosts();
+            break;
+        case 5:
+            running = false;
+            Console.WriteLine("Exiting the program. Goodbye!");
+            logger.Info("Program exited");
+            break;
+        default:
+            // This case will never be hit due to validation in GetUserChoice, but it's here for completeness.
+            Console.WriteLine("Invalid choice. Please select a number between 1 and 5.");
+            break;
+    }
 }
 
 logger.Info("Program ended");
-//Test comment for git
