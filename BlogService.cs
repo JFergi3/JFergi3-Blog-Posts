@@ -114,7 +114,6 @@ public class BlogService
         }
         else
         {
-            Console.WriteLine($"Posts for blog '{selectedBlog.Name}':");
             foreach (var p in posts)
             {
                 Console.WriteLine($"\n Blog: {selectedBlog.Name}");
@@ -140,7 +139,7 @@ public class BlogService
         {
             return null; // Invalid choice
         }
-        return blogs[choice - 1]; // Return zero-based index
+        return blogs[choice - 1]; // Return selected blog (adjusting for 0-based index)
     }
 
     private List<Blog>? GetBlogsOrWarn()
